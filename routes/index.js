@@ -94,6 +94,8 @@ router.post('/Authenticate/OTP-match/:id', async (req, res) => {
     const user = await User.findById(req.params.id);
     // console.log(user);
     if (user.resetPasswordOtp == req.body.otp) {
+      user.resetPasswordOtp = -1;
+      await user.save();
       res.render('Authenticate/newPassword.ejs', { id: user._id });
       return;
     }
