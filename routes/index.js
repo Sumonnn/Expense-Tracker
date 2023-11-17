@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const category = require('../public/javascripts/category');
 const nodemailer = require('nodemailer');
 const User = require("../models/userModel");
 const passport = require("passport");
@@ -17,8 +18,19 @@ router.get('/signup', (req, res, next) => {
 router.get('/forget', (req, res) => {
   res.render('Authenticate/forget.ejs');
 })
-router.get('/profile', (req, res) => {
-  res.render('Expense/profile.ejs');
+//profile file 
+router.get('/profile', async (req, res) => {
+  try {
+    const user = await req.user.populate('expenses');
+    console.log(user.expenses);
+    res.render('Expense/profile.ejs', {
+      category: category,
+      expenses: user.expenses,
+      admin: req.user 
+    });
+  } catch (error) {
+       res.send(error);
+  }
 })
 //signup route
 router.post('/Authenticate/signup', async (req, res) => {
@@ -121,7 +133,7 @@ router.post('/Authenticate/change-password/:id', async (req, res, next) => {
 // AUTHENTICATED ROUTE MIDDLEWARE
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
-     next();
+    next();
   } else {
     res.redirect("/");
   }

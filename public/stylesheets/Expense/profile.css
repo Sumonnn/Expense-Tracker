@@ -1,0 +1,28 @@
+.add-item{
+    width: 80%;
+    height: 12vh;
+    margin-left: 10%;
+    background-color: #343c43;
+    margin-top: 1vw;
+    border-radius: 20px;
+}
+.add-item>form{
+    height: 100%;
+    padding: 0 1vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.add-item>form>input{
+    width: 20%;
+}
+/* .add-item>form>#select{
+    width: 20%;
+} */
+#description{
+    width: 30%;
+}
+.btn-submit{
+    background-color: slategrey;
+    color: aliceblue;
+}
