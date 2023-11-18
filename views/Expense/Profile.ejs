@@ -29,13 +29,19 @@
                 <br><br>
                 <input class="form-control" type="number" placeholder="amount" name="amount">
                 <br><br>
-                <button class="btn btn-submit">Submit</button>
+                <button class="btn btn-info">Submit</button>
             </form>
         </div>
 
         <!--  -->
         <div class="profile">
-
+            <% expenses.forEach((expense) => { %>
+                     <p>category : <%= expense.category %></p>
+                     <p>description : <%= expense.description %></p>
+                     <p>amount : <%= expense.amount %></p>
+                     <p>date : <%= expense.createdAt %> </p>
+                     <hr>
+            <% }) %>
         </div>
 
 
