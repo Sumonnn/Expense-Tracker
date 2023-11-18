@@ -24,7 +24,7 @@ router.get('/profile', async (req, res) => {
     try {
       const user = await req.user.populate('expenses');
       // console.log(user.expenses);
-      res.render('Expense/profile.ejs', {
+      res.render('Expense/Profile.ejs', {
         category: category,
         expenses: user.expenses,
         admin: req.user 
