@@ -138,9 +138,9 @@ function isLoggedIn(req, res, next) {
   }
 }
 // SIGNOUT CODE
-router.get("/signout", isLoggedIn, function (req, res, next) {
+router.get("/logout", isLoggedIn, function (req, res, next) {
   req.logout(() => {
-    res.redirect("/signin");
+    res.redirect("/");
   });
 });
 

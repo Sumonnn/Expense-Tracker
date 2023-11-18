@@ -23,7 +23,7 @@ router.post('/create-expense', async (req, res) => {
 router.get('/profile', async (req, res) => {
     try {
       const user = await req.user.populate('expenses');
-    //   console.log(user.expenses);
+      // console.log(user.expenses);
       res.render('Expense/profile.ejs', {
         category: category,
         expenses: user.expenses,
@@ -34,5 +34,33 @@ router.get('/profile', async (req, res) => {
     }
   })
 
+
+  router.get('/delete/:id', async (req, res) => {
+    try {
+      // console.log( req.params.id);
+      const expenseIndex = await req.user.expenses.findIndex((exp) => exp.valueOf() === req.params.id);
+      console.log("expenseIndexx "+ expenseIndex);
+      req.user.expenses.splice(expenseIndex, 1);
+      await req.user.save();
+      await Expense.findByIdAndDelete(req.params.id);
+      res.redirect("/profile");
+    } catch (error) {
+      res.json(error);
+    }
+  })
+  
+  router.get('/update/:id', async (req, res) => {
+    const expense = await Expense.findById(req.params.id);
+    res.render('Expense/expenseUpdate.ejs', { admin: req.user, id: req.params.id, expense: expense });
+  })
+  // router.post('/update/:id', async (req, res) => {
+  //   try {
+  //     await Expense.findByIdAndUpdate(req.params.id, req.body);
+  //     res.redirect('/profile');
+  //   } catch (error) {
+  //     res.send(error);
+  //   }
+  // })
+  
 
 module.exports = router;
