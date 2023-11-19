@@ -51,16 +51,16 @@ router.get('/profile', async (req, res) => {
   
   router.get('/update/:id', async (req, res) => {
     const expense = await Expense.findById(req.params.id);
-    res.render('Expense/expenseUpdate.ejs', { admin: req.user, id: req.params.id, expense: expense });
+    res.render('Expense/expenseUpdate.ejs', { admin: req.user, id: req.params.id, expense: expense,category:category });
   })
-  // router.post('/update/:id', async (req, res) => {
-  //   try {
-  //     await Expense.findByIdAndUpdate(req.params.id, req.body);
-  //     res.redirect('/profile');
-  //   } catch (error) {
-  //     res.send(error);
-  //   }
-  // })
+  router.post('/update/:id', async (req, res) => {
+    try {
+      await Expense.findByIdAndUpdate(req.params.id, req.body);
+      res.redirect('/profile');
+    } catch (error) {
+      res.send(error);
+    }
+  })
   
 
 module.exports = router;
