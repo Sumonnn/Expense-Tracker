@@ -16,3 +16,9 @@ form>h1{
 form>input{
     width: 100% !important;
 }
+
+
+
+@media all and (min-width: 260px) and (max-width: 767px) {
+  
+}

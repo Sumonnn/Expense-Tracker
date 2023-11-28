@@ -27,3 +27,8 @@ a{
     color: black;
     font-size: 1vw;
 }
+
+
+@media all and (min-width: 260px) and (max-width: 767px) {
+  
+}

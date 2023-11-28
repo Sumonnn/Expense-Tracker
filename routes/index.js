@@ -17,20 +17,7 @@ router.get('/signup', (req, res, next) => {
 router.get('/forget', (req, res) => {
   res.render('Authenticate/forget.ejs');
 })
-//profile file 
-// router.get('/profile', async (req, res) => {
-//   try {
-//     const user = await req.user.populate('expenses');
-//     console.log(user.expenses);
-//     res.render('Expense/profile.ejs', {
-//       category: category,
-//       expenses: user.expenses,
-//       admin: req.user 
-//     });
-//   } catch (error) {
-//        res.send(error);
-//   }
-// })
+
 //signup route
 router.post('/Authenticate/signup', async (req, res) => {
   try {

@@ -3,6 +3,12 @@ var router = express.Router();
 const Expense = require('../models/expenseModel');
 const User = require("../models/userModel");
 const category = require('../public/javascripts/category');
+const Razorpay = require('razorpay');
+
+var instance = new Razorpay({
+  key_id: process.env.ID,
+  key_secret: process.env.SECRET,
+});
 
 
 router.post('/create-expense', async (req, res) => {
@@ -61,6 +67,33 @@ router.get('/profile', async (req, res) => {
       res.send(error);
     }
   })
+
+
+  //razorpay code
+router.post('/create/orderId', (req, res) => {
+  var options = {
+    amount: 50000,  // amount in the smallest currency unit
+    currency: "INR",
+    receipt: "order_rcptid_11"
+  };
+  instance.orders.create(options, function (err, order) {
+    console.log(order);
+    res.send(order);
+  });
+})
+
+
+router.post('/api/payment/verify',function(req,res){
+  let razorpayPaymentId = req.body.response.razorpay_payment_id
+  let razorpayOrderId = req.body.response.razorpay_order_id;
+  let signature = req.body.response.razorpay_signature;
+  let secret = 'rffLwkD5Z9kdXSOwrwwJ7hMY'
+  
+var { validatePaymentVerification, validateWebhookSignature } = require('../node_modules/razorpay/dist/utils/razorpay-utils');
+
+const result = validatePaymentVerification({"order_id": razorpayOrderId, "payment_id": razorpayPaymentId }, signature, secret);
+res.send(result)
+})
   
 
 module.exports = router;
